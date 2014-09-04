@@ -161,7 +161,7 @@ trait RepositoryService { self: AccountService =>
         (Query(Collaborators).filter { t2 => t2.byRepository(t1.userName, t1.repositoryName) && (t2.collaboratorName is userName.bind)} exists)
     }.sortBy(_.lastActivityDate desc).list.map{ repository =>
       new RepositoryInfo(
-        JGitUtil.getRepositoryInfo(repository.userName, repository.repositoryName, baseUrl),
+        JGitUtil.getRepositoryBasicInfo(repository.userName, repository.repositoryName, baseUrl),
         repository,
         getForkedCount(
           repository.originUserName.getOrElse(repository.userName),
@@ -195,7 +195,7 @@ trait RepositoryService { self: AccountService =>
       repositoryUserName.map { userName => t.userName is userName.bind } getOrElse ConstColumn.TRUE
     }.sortBy(_.lastActivityDate desc).list.map{ repository =>
       new RepositoryInfo(
-        JGitUtil.getRepositoryInfo(repository.userName, repository.repositoryName, baseUrl),
+        JGitUtil.getRepositoryBasicInfo(repository.userName, repository.repositoryName, baseUrl),
         repository,
         getForkedCount(
           repository.originUserName.getOrElse(repository.userName),

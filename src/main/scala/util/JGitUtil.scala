@@ -130,7 +130,19 @@ object JGitUtil {
     revWalk.dispose
     revCommit
   }
-  
+
+  /**
+   * Returns the repository basic information.
+   */
+  def getRepositoryBasicInfo(owner: String, repository: String, baseUrl: String): RepositoryInfo = {
+    RepositoryInfo(
+      owner, repository, s"${baseUrl}/git/${owner}/${repository}.git",
+      0,
+      Nil,
+      Nil
+    )
+  }
+
   /**
    * Returns the repository information. It contains branch names and tag names.
    */
